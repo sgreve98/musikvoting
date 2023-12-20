@@ -13,8 +13,8 @@ public class SqlAbfragen {
 
 	//private static final String JDBC_URL = "jdbc:mysql://your_database_url:port/Musikvoting";
 	private static final String JDBC_URL = "jdbc:mysql://127.0.0.1:3306/musikvoting?";
-    private static final String USERNAME = "Steven";
-    private static final String PASSWORD = "Peterpan123";
+    private static final String USERNAME = "Frederic";
+    private static final String PASSWORD = "1234";
 
     private static Connection connection;
 
@@ -23,6 +23,29 @@ public class SqlAbfragen {
             connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
         }
         return connection;
+    }
+    
+    public static boolean doesUserExist(String userNameToCheck) {
+        boolean userExists = false;
+        String query = "SELECT COUNT(*) FROM t_user WHERE User_name = ?";
+
+        try (Connection conn = connect();
+             PreparedStatement statement = conn.prepareStatement(query)) {
+
+            statement.setString(1, userNameToCheck);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    userExists = (count > 0);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception according to your application's needs
+        }
+
+        return userExists;
     }
     
     public List<User> getUser() {

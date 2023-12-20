@@ -1,7 +1,6 @@
 package gui;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
 import sqlDummys.*;
@@ -27,10 +26,9 @@ public class Gui {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        });
+        });        
         
-        SqlAbfragen testAbfragen = new SqlAbfragen();
-        System.out.println(testAbfragen.getUser());
+        System.out.println(SqlAbfragen.doesUserExist("fg"));
     }
 
     private void initialize() {
